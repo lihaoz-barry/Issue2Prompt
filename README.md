@@ -65,6 +65,7 @@ Issue2Prompt/
 - All data stored locally in your browser
 - No external server communication
 - No GitHub authentication required for public repos
+- See the full [Privacy Policy](./PRIVACY.md) for more details.
 
 ## Contributing
 
