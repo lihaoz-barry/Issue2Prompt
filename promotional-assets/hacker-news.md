@@ -15,7 +15,7 @@
 
 ### Title (80 characters max)
 ```
-Show HN: GitHub Issue to AI Prompt – Chrome extension to convert issues into AI-ready prompts
+Show HN: Issue2Prompt – Chrome extension to convert issues into AI-ready prompts
 ```
 
 ### URL

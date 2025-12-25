@@ -1,5 +1,5 @@
 /**
- * Background Service Worker - GitHub Issue to AI Prompt
+ * Background Service Worker - Issue2Prompt
  * Handles communication between content script and popup
  */
 
@@ -481,9 +481,9 @@ chrome.runtime.onInstalled.addListener(async (details) => {
       [STORAGE_KEYS.HISTORY]: []
     });
 
-    console.log('[GitHub Issue to AI Prompt] Extension installed successfully');
+    console.log('[Issue2Prompt] Extension installed successfully');
   } else if (details.reason === 'update') {
-    console.log(`[GitHub Issue to AI Prompt] Extension updated to version ${chrome.runtime.getManifest().version}`);
+    console.log(`[Issue2Prompt] Extension updated to version ${chrome.runtime.getManifest().version}`);
   }
 });
 

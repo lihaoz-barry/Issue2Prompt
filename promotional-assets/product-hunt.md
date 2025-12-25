@@ -15,7 +15,7 @@
 
 ### Product Name
 ```
-GitHub Issue to AI Prompt
+Issue2Prompt
 ```
 
 ### Tagline (60 characters max)

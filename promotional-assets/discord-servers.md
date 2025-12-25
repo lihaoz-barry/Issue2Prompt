@@ -24,7 +24,7 @@ Look for servers with channels like:
 Use this for servers with character limits or #tools channels:
 
 ```
-🔧 **GitHub Issue to AI Prompt** - Chrome Extension
+🔧 **Issue2Prompt** - Chrome Extension
 
 Converts GitHub issues into formatted prompts for ChatGPT/Claude in one click.
 
@@ -46,7 +46,7 @@ Use this for #show-your-work or #self-promotion channels:
 ```
 👋 Hey everyone! Sharing a Chrome extension I built that might save you some time.
 
-## GitHub Issue to AI Prompt
+## Issue2Prompt
 
 **The problem:** Every time I wanted AI help with a GitHub issue, I'd spend 5 minutes copying the title, description, code blocks, error logs, and comments... then formatting it all nicely.
 
@@ -85,7 +85,7 @@ Some Discord bots allow rich embeds. If posting through a bot or webhook:
 ```json
 {
   "embeds": [{
-    "title": "GitHub Issue to AI Prompt",
+    "title": "Issue2Prompt",
     "description": "Chrome extension that converts GitHub issues into formatted prompts for AI assistants",
     "color": 2067276,
     "fields": [
@@ -101,7 +101,7 @@ Some Discord bots allow rich embeds. If posting through a bot or webhook:
       }
     ],
     "thumbnail": {
-      "url": "https://raw.githubusercontent.com/lihaoz-barry/Issue2Prompt/main/github-issue-to-prompt/icons/icon128.png"
+      "url": "https://raw.githubusercontent.com/lihaoz-barry/Issue2Prompt/main/issue2prompt/icons/icon128.png"
     }
   }]
 }

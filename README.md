@@ -1,4 +1,4 @@
-# GitHub Issue to AI Prompt
+# Issue2Prompt
 
 A Chrome extension that converts GitHub issues into structured AI prompts with one click. Streamline your workflow by automatically extracting issue context and generating high-quality prompts for Claude, GPT, Gemini, and other AI assistants.
 
@@ -19,7 +19,7 @@ A Chrome extension that converts GitHub issues into structured AI prompts with o
 2. Open Chrome and navigate to `chrome://extensions/`
 3. Enable "Developer mode" (toggle in top right)
 4. Click "Load unpacked"
-5. Select the `github-issue-to-prompt` folder
+5. Select the `issue2prompt` folder
 
 ### Usage
 
@@ -40,13 +40,13 @@ A Chrome extension that converts GitHub issues into structured AI prompts with o
 | `{{labels}}` | Issue labels |
 | `{{repository}}` | Repository name |
 
-See the [extension README](./github-issue-to-prompt/README.md) for the complete list of variables.
+See the [extension README](./issue2prompt/README.md) for the complete list of variables.
 
 ## Project Structure
 
 ```
 Issue2Prompt/
-├── github-issue-to-prompt/    # Chrome extension source
+├── issue2prompt/    # Chrome extension source
 │   ├── manifest.json          # Extension manifest
 │   ├── src/                   # Source code
 │   │   ├── content/           # Content scripts

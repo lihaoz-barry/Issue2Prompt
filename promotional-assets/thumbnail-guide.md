@@ -23,7 +23,7 @@ I cannot generate images directly. Use one of these tools:
 |                                                  |
 |     [GitHub Logo]  →  [AI Sparkle Icon]          |
 |                                                  |
-|        "GitHub Issue to AI Prompt"               |
+|        "Issue2Prompt"               |
 |                                                  |
 |     [Screenshot of popup in center]              |
 |                                                  |
@@ -96,7 +96,7 @@ Abstract technology background with subtle code/programming elements, dark theme
 ### Twitter/X Header (1500x500)
 ```
 +--------------------------------------------------+
-|   GitHub Issue to AI Prompt                      |
+|   Issue2Prompt                      |
 |   [Icon] Convert issues to prompts in one click  |
 |          [Three feature icons below]             |
 +--------------------------------------------------+
@@ -126,7 +126,7 @@ Abstract technology background with subtle code/programming elements, dark theme
 ## Icon Assets to Use
 
 ### Existing Assets
-- Extension icon: `github-issue-to-prompt/icons/icon128.png`
+- Extension icon: `issue2prompt/icons/icon128.png`
 - Screenshots: `promotional-assets/popup-prompt-editor.png`, `settings-page.png`
 
 ### Icons to Source (Free)

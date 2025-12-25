@@ -22,7 +22,7 @@ I got tired of this workflow, so I built a Chrome extension to automate it.
 
 ## What It Does
 
-**GitHub Issue to AI Prompt** extracts all relevant information from any GitHub issue and formats it into a structured prompt ready for Claude, ChatGPT, or any AI coding assistant.
+**Issue2Prompt** extracts all relevant information from any GitHub issue and formats it into a structured prompt ready for Claude, ChatGPT, or any AI coding assistant.
 
 ![Extension popup showing generated prompt](https://raw.githubusercontent.com/lihaoz-barry/Issue2Prompt/main/promotional-assets/popup-prompt-editor.png)
 
