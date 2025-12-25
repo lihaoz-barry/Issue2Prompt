@@ -339,11 +339,142 @@ Based on all the information above, please provide:
     // Load custom templates
     await loadCustomTemplates();
 
-    // Try to load cached data
-    await loadCachedData();
-
     // Setup event listeners
     setupEventListeners();
+
+    // Load data and show editor
+    await loadAndShowEditor();
+  }
+
+  /**
+   * Load data and show the prompt editor
+   */
+  async function loadAndShowEditor() {
+    // Get current tab
+    let currentTab = null;
+    let currentTabUrl = '';
+    try {
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      currentTab = tab;
+      currentTabUrl = tab?.url || '';
+    } catch (e) {
+      console.error('Error getting current tab:', e);
+    }
+
+    const isGitHubIssue = /github\.com\/[^/]+\/[^/]+\/issues\/\d+/.test(currentTabUrl);
+
+    if (!isGitHubIssue) {
+      // Not on a GitHub issue page
+      showStatusMessage();
+      return;
+    }
+
+    // Show the prompt editor immediately with loading state
+    showPromptEditorLoading();
+
+    // Check if we have cached data for this URL
+    const cacheResult = await new Promise(resolve => {
+      chrome.runtime.sendMessage({ type: 'GET_CACHED_DATA' }, resolve);
+    });
+
+    if (cacheResult?.success && cacheResult.data?.currentIssueUrl === currentTabUrl) {
+      // Cache matches, use it
+      cachedData = cacheResult.data.extractedData;
+      showPromptEditor();
+      generatePrompt();
+      triggerAutoGenerateIfEnabled();
+    } else {
+      // Need to extract data
+      await extractDataFromTab(currentTab);
+    }
+  }
+
+  /**
+   * Show prompt editor with loading indicator
+   */
+  function showPromptEditorLoading() {
+    statusMessage.classList.add('hidden');
+    promptEditor.classList.remove('hidden');
+    regenerateBtn.disabled = true;
+    copyBtn.disabled = true;
+    if (aiGenerateBtn) aiGenerateBtn.disabled = true;
+
+    // Show loading in textarea
+    promptTextarea.value = 'Loading issue data...';
+    promptTextarea.disabled = true;
+    issueTitle.textContent = 'Loading...';
+    issueLink.href = '#';
+  }
+
+  /**
+   * Extract data from the current tab
+   */
+  async function extractDataFromTab(tab) {
+    try {
+      // Try to send message to content script
+      await new Promise((resolve, reject) => {
+        chrome.tabs.sendMessage(tab.id, { type: 'RE_EXTRACT' }, async (response) => {
+          if (chrome.runtime.lastError) {
+            // Content script not ready, inject it
+            try {
+              await chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                files: ['src/content/content.js']
+              });
+              // Wait and retry
+              await new Promise(r => setTimeout(r, 300));
+              chrome.tabs.sendMessage(tab.id, { type: 'RE_EXTRACT' }, () => resolve());
+            } catch (e) {
+              reject(e);
+            }
+          } else {
+            resolve();
+          }
+        });
+      });
+
+      // Wait for extraction to complete
+      await new Promise(r => setTimeout(r, 500));
+
+      // Get the cached data
+      const result = await new Promise(resolve => {
+        chrome.runtime.sendMessage({ type: 'GET_CACHED_DATA' }, resolve);
+      });
+
+      if (result?.success && result.data?.extractedData) {
+        cachedData = result.data.extractedData;
+        showPromptEditor();
+        generatePrompt();
+        triggerAutoGenerateIfEnabled();
+      } else {
+        showErrorInEditor('Failed to extract issue data. Please refresh the page.');
+      }
+    } catch (error) {
+      console.error('Error extracting data:', error);
+      showErrorInEditor('Error extracting data. Please refresh the page.');
+    }
+  }
+
+  /**
+   * Show error in the editor area
+   */
+  function showErrorInEditor(message) {
+    promptTextarea.value = message;
+    promptTextarea.disabled = false;
+    regenerateBtn.disabled = false;
+    issueTitle.textContent = 'Error';
+  }
+
+  /**
+   * Trigger auto-generate with AI if setting is enabled
+   */
+  function triggerAutoGenerateIfEnabled() {
+    if (settings?.autoGeneratePrompt && settings?.openaiApiKey && cachedData) {
+      // Small delay to let UI render
+      setTimeout(() => {
+        generateWithAI();
+      }, 300);
+    }
   }
 
   /**
@@ -394,142 +525,6 @@ Based on all the information above, please provide:
   }
 
   /**
-   * Load cached data from background
-   */
-  async function loadCachedData() {
-    return new Promise((resolve) => {
-      chrome.runtime.sendMessage({ type: 'GET_CACHED_DATA' }, async (response) => {
-        if (response && response.success && response.data) {
-          cachedData = response.data.extractedData;
-          showPromptEditor();
-          generatePrompt();
-        } else {
-          // Check if we're on a GitHub issue page and show appropriate message
-          await checkCurrentPageAndShowStatus();
-        }
-        resolve();
-      });
-    });
-  }
-
-  /**
-   * Check if current page is a GitHub issue and show appropriate status
-   */
-  async function checkCurrentPageAndShowStatus() {
-    try {
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      const url = tab?.url || '';
-      const isGitHubIssue = /github\.com\/[^/]+\/[^/]+\/issues\/\d+/.test(url);
-
-      if (isGitHubIssue) {
-        showExtractButton(tab);
-      } else {
-        showStatusMessage();
-      }
-    } catch (error) {
-      console.error('Error checking current page:', error);
-      showStatusMessage();
-    }
-  }
-
-  /**
-   * Show the extract button when on a GitHub issue page
-   */
-  function showExtractButton(tab) {
-    statusMessage.classList.remove('hidden');
-    promptEditor.classList.add('hidden');
-    regenerateBtn.disabled = true;
-    copyBtn.disabled = true;
-
-    // Update the status message to show extract button
-    statusMessage.innerHTML = `
-      <svg class="status-icon status-icon-ready" viewBox="0 0 16 16" width="48" height="48" fill="currentColor">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-      </svg>
-      <p><strong>GitHub Issue Detected!</strong></p>
-      <p class="status-subtext">Click below to extract issue data and generate a prompt.</p>
-      <button id="extract-btn" class="btn btn-primary btn-extract">
-        <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
-          <path d="M4.72 3.22a.75.75 0 0 1 1.06 1.06L2.06 8l3.72 3.72a.75.75 0 1 1-1.06 1.06L.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25zm6.56 0a.75.75 0 1 0-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 1 0 1.06 1.06l4.25-4.25a.75.75 0 0 0 0-1.06l-4.25-4.25z"></path>
-        </svg>
-        Generate AI Prompt
-      </button>
-    `;
-
-    // Add click handler for extract button
-    const extractBtn = document.getElementById('extract-btn');
-    if (extractBtn) {
-      extractBtn.addEventListener('click', () => extractFromCurrentPage(tab));
-    }
-  }
-
-  /**
-   * Extract data from current page by sending message to content script
-   */
-  async function extractFromCurrentPage(tab) {
-    const extractBtn = document.getElementById('extract-btn');
-    if (extractBtn) {
-      extractBtn.disabled = true;
-      extractBtn.innerHTML = `
-        <svg class="spin" viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
-          <path d="M8 0a8 8 0 1 0 8 8A8 8 0 0 0 8 0zm0 14.5a6.5 6.5 0 1 1 6.5-6.5 6.5 6.5 0 0 1-6.5 6.5z" opacity="0.3"/>
-          <path d="M8 0v2a6 6 0 0 1 6 6h2a8 8 0 0 0-8-8z"/>
-        </svg>
-        Extracting...
-      `;
-    }
-
-    try {
-      // Try to send message to content script
-      chrome.tabs.sendMessage(tab.id, { type: 'RE_EXTRACT' }, async (response) => {
-        if (chrome.runtime.lastError) {
-          console.log('Content script not ready, injecting manually...');
-          // Content script might not be loaded, try to inject it
-          try {
-            await chrome.scripting.executeScript({
-              target: { tabId: tab.id },
-              files: ['src/content/content.js']
-            });
-            // Wait a bit and retry
-            setTimeout(() => {
-              chrome.tabs.sendMessage(tab.id, { type: 'RE_EXTRACT' }, async () => {
-                await new Promise(resolve => setTimeout(resolve, 500));
-                await loadCachedData();
-              });
-            }, 300);
-          } catch (injectError) {
-            console.error('Failed to inject content script:', injectError);
-            showErrorStatus('Failed to extract. Please refresh the page and try again.');
-          }
-        } else {
-          // Wait for cache update
-          await new Promise(resolve => setTimeout(resolve, 500));
-          await loadCachedData();
-        }
-      });
-    } catch (error) {
-      console.error('Error extracting from page:', error);
-      showErrorStatus('Error extracting data: ' + error.message);
-    }
-  }
-
-  /**
-   * Show error status in the status message area
-   */
-  function showErrorStatus(message) {
-    statusMessage.innerHTML = `
-      <svg class="status-icon status-icon-error" viewBox="0 0 16 16" width="48" height="48" fill="currentColor">
-        <path d="M8 1.5a6.5 6.5 0 1 0 6.5 6.5A6.5 6.5 0 0 0 8 1.5zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
-        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-      </svg>
-      <p class="status-error">${message}</p>
-      <button id="retry-btn" class="btn btn-secondary" onclick="location.reload()">
-        Retry
-      </button>
-    `;
-  }
-
-  /**
    * Show the status message (no data state)
    */
   function showStatusMessage() {
@@ -556,6 +551,8 @@ Based on all the information above, please provide:
     promptEditor.classList.remove('hidden');
     regenerateBtn.disabled = false;
     copyBtn.disabled = false;
+    promptTextarea.disabled = false;
+    if (aiGenerateBtn) aiGenerateBtn.disabled = false;
 
     // Update issue info
     if (cachedData && cachedData.metadata) {
@@ -897,25 +894,18 @@ Based on all the information above, please provide:
     `;
 
     try {
-      // Query current tab
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-      if (tab && tab.url && tab.url.includes('github.com') && tab.url.includes('/issues/')) {
-        // Send message to content script to re-extract
-        chrome.tabs.sendMessage(tab.id, { type: 'RE_EXTRACT' }, async (response) => {
-          // Wait for cache update
-          await new Promise(resolve => setTimeout(resolve, 500));
-          await loadCachedData();
-
-          regenerateBtn.disabled = false;
-          regenerateBtn.innerHTML = `
-            <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
-              <path d="M8 2.5a5.5 5.5 0 1 0 5.5 5.5.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63l-.5.86A5.5 5.5 0 0 0 8 2.5z"/>
-              <path d="M10.5 5V1a.5.5 0 0 1 .8-.4l3 2.25a.5.5 0 0 1 0 .8l-3 2.25a.5.5 0 0 1-.8-.4V5z"/>
-            </svg>
-            Regenerate
-          `;
-        });
+      if (tab && /github\.com\/[^/]+\/[^/]+\/issues\/\d+/.test(tab.url)) {
+        await extractDataFromTab(tab);
+        regenerateBtn.disabled = false;
+        regenerateBtn.innerHTML = `
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+            <path d="M8 2.5a5.5 5.5 0 1 0 5.5 5.5.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63l-.5.86A5.5 5.5 0 0 0 8 2.5z"/>
+            <path d="M10.5 5V1a.5.5 0 0 1 .8-.4l3 2.25a.5.5 0 0 1 0 .8l-3 2.25a.5.5 0 0 1-.8-.4V5z"/>
+          </svg>
+          Regenerate
+        `;
       } else {
         alert('Please navigate to a GitHub issue page first.');
         regenerateBtn.disabled = false;

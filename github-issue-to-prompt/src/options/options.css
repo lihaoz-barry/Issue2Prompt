@@ -143,8 +143,25 @@ body {
   cursor: pointer;
 }
 
+.checkbox-label input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .checkbox-text {
   font-weight: 400;
+}
+
+/* Sub-option styling for nested settings */
+.setting-sub-option {
+  margin-left: 24px;
+  padding-left: 16px;
+  border-left: 2px solid #d0d7de;
+  transition: opacity 0.2s;
+}
+
+.setting-indent {
+  margin-left: 24px;
 }
 
 /* Buttons */
@@ -663,5 +680,9 @@ body {
 
   .close-btn:hover {
     color: #c9d1d9;
+  }
+
+  .setting-sub-option {
+    border-left-color: #30363d;
   }
 }

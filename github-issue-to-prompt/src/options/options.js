@@ -25,6 +25,10 @@
   const autoClosePopupCheckbox = document.getElementById('auto-close-popup');
   const showNotificationCheckbox = document.getElementById('show-notification');
   const autoDetectTypeCheckbox = document.getElementById('auto-detect-type');
+  const showBadgeIndicatorCheckbox = document.getElementById('show-badge-indicator');
+  const autoOpenPopupCheckbox = document.getElementById('auto-open-popup');
+  const autoGeneratePromptCheckbox = document.getElementById('auto-generate-prompt');
+  const autoGenerateGroup = document.getElementById('auto-generate-group');
   const includeCommentsCheckbox = document.getElementById('include-comments');
   const includeCodeBlocksCheckbox = document.getElementById('include-code-blocks');
   const includePRsCheckbox = document.getElementById('include-prs');
@@ -85,9 +89,27 @@
     autoClosePopupCheckbox.checked = settings.autoClosePopup || false;
     showNotificationCheckbox.checked = settings.showNotification !== false;
     autoDetectTypeCheckbox.checked = settings.autoDetectType !== false;
+    showBadgeIndicatorCheckbox.checked = settings.showBadgeIndicator !== false;
+    autoOpenPopupCheckbox.checked = settings.autoOpenPopup || false;
+    autoGeneratePromptCheckbox.checked = settings.autoGeneratePrompt || false;
+    updateAutoGenerateState();
     includeCommentsCheckbox.checked = settings.includeComments !== false;
     includeCodeBlocksCheckbox.checked = settings.includeCodeBlocks !== false;
     includePRsCheckbox.checked = settings.includePRs !== false;
+  }
+
+  /**
+   * Update the auto-generate checkbox state based on auto-open checkbox
+   */
+  function updateAutoGenerateState() {
+    const isAutoOpenEnabled = autoOpenPopupCheckbox.checked;
+    autoGeneratePromptCheckbox.disabled = !isAutoOpenEnabled;
+    if (autoGenerateGroup) {
+      autoGenerateGroup.style.opacity = isAutoOpenEnabled ? '1' : '0.5';
+    }
+    if (!isAutoOpenEnabled) {
+      autoGeneratePromptCheckbox.checked = false;
+    }
   }
 
   /**
@@ -124,6 +146,9 @@
       autoClosePopup: autoClosePopupCheckbox.checked,
       showNotification: showNotificationCheckbox.checked,
       autoDetectType: autoDetectTypeCheckbox.checked,
+      showBadgeIndicator: showBadgeIndicatorCheckbox.checked,
+      autoOpenPopup: autoOpenPopupCheckbox.checked,
+      autoGeneratePrompt: autoGeneratePromptCheckbox.checked,
       includeComments: includeCommentsCheckbox.checked,
       includeCodeBlocks: includeCodeBlocksCheckbox.checked,
       includePRs: includePRsCheckbox.checked
@@ -565,6 +590,12 @@
     autoClosePopupCheckbox.addEventListener('change', saveSettings);
     showNotificationCheckbox.addEventListener('change', saveSettings);
     autoDetectTypeCheckbox.addEventListener('change', saveSettings);
+    showBadgeIndicatorCheckbox.addEventListener('change', saveSettings);
+    autoOpenPopupCheckbox.addEventListener('change', () => {
+      updateAutoGenerateState();
+      saveSettings();
+    });
+    autoGeneratePromptCheckbox.addEventListener('change', saveSettings);
     includeCommentsCheckbox.addEventListener('change', saveSettings);
     includeCodeBlocksCheckbox.addEventListener('change', saveSettings);
     includePRsCheckbox.addEventListener('change', saveSettings);

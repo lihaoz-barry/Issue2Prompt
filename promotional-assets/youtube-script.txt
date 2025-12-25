@@ -1,0 +1,173 @@
+YOUTUBE VIDEO SCRIPT
+====================
+Title: GitHub Issue to AI Prompt - Chrome Extension Demo (Save Hours on Bug Fixes!)
+Duration: ~3-4 minutes
+Format: Screen recording with voiceover
+
+================================================================================
+TIMESTAMPS FOR VIDEO DESCRIPTION:
+================================================================================
+0:00 - Intro: The Problem
+0:25 - Extension Overview
+0:45 - Demo: Basic Usage
+1:30 - Template Selection
+2:00 - AI-Powered Generation
+2:30 - Custom Templates
+3:00 - Settings & Configuration
+3:30 - Outro & Links
+
+================================================================================
+SCRIPT WITH TIMESTAMPS:
+================================================================================
+
+[0:00 - 0:25] INTRO: THE PROBLEM
+---------------------------------
+VISUAL: Show a GitHub issue page, then manually copying text to ChatGPT
+
+VOICEOVER:
+"If you've ever asked ChatGPT or Claude for help with a GitHub issue, you know the pain. Copy the title. Copy the description. Scroll down for the code blocks. Find the error message. Summarize the comments. Format it all nicely. By the time you're done, you've wasted five minutes and lost your train of thought.
+
+I built a Chrome extension to fix this."
+
+[0:25 - 0:45] EXTENSION OVERVIEW
+---------------------------------
+VISUAL: Show the extension icon, then the popup opening
+
+VOICEOVER:
+"GitHub Issue to AI Prompt. One click, and it extracts everything you need from any GitHub issue - title, description, code blocks, error logs, comments, linked PRs - and formats it into a clean prompt ready for any AI assistant."
+
+[0:45 - 1:30] DEMO: BASIC USAGE
+---------------------------------
+VISUAL: Navigate to a real GitHub issue, click extension, show the generated prompt
+
+VOICEOVER:
+"Let me show you how it works. Here's a typical GitHub issue - a bug report with some code blocks and an error message.
+
+I click the extension icon... and instantly, it's extracted everything. See the title here, the full description with markdown preserved, the code blocks, and the error log.
+
+The prompt is ready to copy. One click, and it's on my clipboard. Now I just paste it into ChatGPT, Claude, or whatever AI I'm using."
+
+ACTION: Click copy button, switch to ChatGPT/Claude, paste
+
+[1:30 - 2:00] TEMPLATE SELECTION
+---------------------------------
+VISUAL: Show the template dropdown, switch between templates
+
+VOICEOVER:
+"The extension comes with six built-in templates. Bug Fix is selected by default, but you can switch to Feature Request if you're implementing something new. Code Review if you need feedback on an approach. Question Help for technical questions. Minimal for a quick, concise prompt. Or Detailed if you want every piece of context included.
+
+Each template formats the data differently to match your use case."
+
+ACTION: Click through each template, show how the output changes
+
+[2:00 - 2:30] AI-POWERED GENERATION
+------------------------------------
+VISUAL: Click "Generate with AI" button, show loading, show result
+
+VOICEOVER:
+"If you want even smarter prompts, you can use the AI generation feature. This sends the issue data to GPT, which analyzes everything and generates an optimized prompt.
+
+Click Generate with AI... it takes a few seconds... and now you have a prompt that's been intelligently structured to get the best response from your AI assistant.
+
+This feature requires your own OpenAI API key, which you can add in the settings."
+
+[2:30 - 3:00] CUSTOM TEMPLATES
+-------------------------------
+VISUAL: Open settings, show custom template section, briefly show template syntax
+
+VOICEOVER:
+"You can also create your own templates. In the settings, click Add New Template, give it a name, and write your template using simple placeholder syntax.
+
+Double curly braces for variables - like title, description, code blocks. Conditional sections with hash-if. It's similar to Handlebars if you've used that before.
+
+You can even export and import templates to share with your team."
+
+[3:00 - 3:30] SETTINGS & CONFIGURATION
+---------------------------------------
+VISUAL: Scroll through settings page
+
+VOICEOVER:
+"A few other settings worth mentioning. You can enable the icon badge to show a green indicator when you're on a GitHub issue page. Auto-open to have the popup appear automatically. And auto-generate to run AI generation as soon as you open the extension.
+
+Your API key is stored locally and never leaves your browser except to call OpenAI. The extension is fully open source, so you can audit the code yourself."
+
+[3:30 - 3:50] OUTRO & LINKS
+----------------------------
+VISUAL: Show GitHub repo, Chrome Web Store link
+
+VOICEOVER:
+"That's GitHub Issue to AI Prompt. Free, open source, no tracking.
+
+Links are in the description below. If this saves you time, consider giving it a star on GitHub.
+
+Thanks for watching!"
+
+================================================================================
+VIDEO DESCRIPTION:
+================================================================================
+
+GitHub Issue to AI Prompt - Chrome extension that converts GitHub issues into optimized prompts for ChatGPT, Claude, and other AI assistants.
+
+🔗 LINKS:
+• Chrome Web Store: [link]
+• GitHub: https://github.com/lihaoz-barry/Issue2Prompt
+
+⏱️ TIMESTAMPS:
+0:00 - Intro: The Problem
+0:25 - Extension Overview
+0:45 - Demo: Basic Usage
+1:30 - Template Selection
+2:00 - AI-Powered Generation
+2:30 - Custom Templates
+3:00 - Settings & Configuration
+3:30 - Outro & Links
+
+✨ FEATURES:
+• One-click extraction from GitHub issues
+• 6 built-in templates (Bug Fix, Feature Request, Code Review, etc.)
+• Optional AI-powered prompt generation
+• Custom template support
+• Privacy-first - no tracking, open source
+
+🏷️ TAGS:
+github, chrome extension, ai tools, chatgpt, claude, developer tools, productivity, coding, programming, bug fixing
+
+================================================================================
+THUMBNAIL SUGGESTIONS:
+================================================================================
+
+Option 1: Split screen
+- Left: GitHub logo/issue page (messy)
+- Right: Clean formatted prompt
+- Text overlay: "GitHub → AI Prompt"
+- Arrow connecting them
+
+Option 2: Before/After
+- "Before": Clock showing 5 minutes, frustrated emoji
+- "After": Clock showing 5 seconds, happy emoji
+- Text: "GitHub Issues to AI Prompts"
+
+Option 3: Simple
+- GitHub Octocat + AI sparkle icon
+- Text: "One Click"
+- Subtext: "GitHub → AI Prompt"
+
+Colors: Use GitHub's green (#238636) as accent color
+
+================================================================================
+RECORDING TIPS:
+================================================================================
+
+1. Use a real GitHub issue (your own repo or a popular open source one)
+2. Clean browser - hide bookmarks bar, use incognito if needed
+3. Zoom browser to 125% for better visibility
+4. Use a good microphone for clear voiceover
+5. Record at 1080p minimum, 4K if possible
+6. Add subtle zoom effects when highlighting features
+7. Keep mouse movements smooth and deliberate
+8. Consider adding background music (royalty-free, subtle)
+
+TOOLS:
+- Screen recording: OBS, Loom, or ScreenFlow
+- Editing: DaVinci Resolve (free), Premiere, Final Cut
+- Thumbnails: Canva, Figma, or Photoshop

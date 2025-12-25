@@ -123,6 +123,30 @@
             <span class="checkbox-text">Auto-detect issue type and recommend template</span>
           </label>
         </div>
+
+        <div class="setting-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="show-badge-indicator" checked>
+            <span class="checkbox-text">Show icon badge on GitHub issue pages</span>
+          </label>
+          <p class="setting-description setting-indent">Shows a green indicator dot on the extension icon when viewing a GitHub issue.</p>
+        </div>
+
+        <div class="setting-group checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="auto-open-popup">
+            <span class="checkbox-text">Auto-open popup when entering a GitHub issue page</span>
+          </label>
+          <p class="setting-description setting-indent">Automatically opens the extension popup when you navigate to a GitHub issue.</p>
+        </div>
+
+        <div class="setting-group checkbox-group setting-sub-option" id="auto-generate-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="auto-generate-prompt" disabled>
+            <span class="checkbox-text">Auto-generate AI prompt when popup opens</span>
+          </label>
+          <p class="setting-description setting-indent">When auto-open is enabled, automatically generates the AI prompt (requires API key).</p>
+        </div>
       </section>
 
       <!-- Extraction Settings Section -->

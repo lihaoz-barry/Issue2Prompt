@@ -22,7 +22,10 @@ const DEFAULT_SETTINGS = {
   maxComments: 5,
   openaiApiKey: '',
   openaiModel: 'gpt-4o-mini',
-  apiKeyValid: null
+  apiKeyValid: null,
+  autoOpenPopup: false,
+  autoGeneratePrompt: false,
+  showBadgeIndicator: true
 };
 
 const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
@@ -490,4 +493,95 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 chrome.action.onClicked.addListener(async (tab) => {
   // This won't fire if popup is set, but keeping for reference
   console.log('[Background] Action clicked on tab:', tab.url);
+});
+
+/**
+ * Check if URL is a GitHub issue page
+ */
+function isGitHubIssuePage(url) {
+  if (!url) return false;
+  return /github\.com\/[^/]+\/[^/]+\/issues\/\d+/.test(url);
+}
+
+/**
+ * Handle tab URL changes for badge indicator and auto-popup feature
+ */
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+  // Only trigger when the page has finished loading
+  if (changeInfo.status !== 'complete') return;
+
+  const url = tab.url;
+  const isIssue = isGitHubIssuePage(url);
+
+  try {
+    const result = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
+    const settings = { ...DEFAULT_SETTINGS, ...(result[STORAGE_KEYS.SETTINGS] || {}) };
+
+    // Handle badge indicator
+    if (settings.showBadgeIndicator) {
+      if (isIssue) {
+        // Show green badge on GitHub issue pages
+        chrome.action.setBadgeText({ text: ' ', tabId: tabId });
+        chrome.action.setBadgeBackgroundColor({ color: '#238636', tabId: tabId });
+      } else {
+        // Clear badge on non-issue pages
+        chrome.action.setBadgeText({ text: '', tabId: tabId });
+      }
+    } else {
+      // Clear badge if indicator is disabled
+      chrome.action.setBadgeText({ text: '', tabId: tabId });
+    }
+
+    // Handle auto-open popup
+    if (isIssue && settings.autoOpenPopup) {
+      // Store a flag indicating this is an auto-open scenario
+      await chrome.storage.local.set({
+        autoOpenContext: {
+          tabId: tabId,
+          url: url,
+          autoGenerate: settings.autoGeneratePrompt,
+          timestamp: Date.now()
+        }
+      });
+
+      // Try to open the popup programmatically
+      try {
+        await chrome.action.openPopup();
+      } catch (e) {
+        console.log('[Background] Could not auto-open popup');
+      }
+    }
+  } catch (error) {
+    console.error('[Background] Error in tab update handler:', error);
+  }
+});
+
+/**
+ * Listen for tab activation to update badge and clear stale context
+ */
+chrome.tabs.onActivated.addListener(async (activeInfo) => {
+  try {
+    const tab = await chrome.tabs.get(activeInfo.tabId);
+    const isIssue = isGitHubIssuePage(tab.url);
+
+    const result = await chrome.storage.local.get(STORAGE_KEYS.SETTINGS);
+    const settings = { ...DEFAULT_SETTINGS, ...(result[STORAGE_KEYS.SETTINGS] || {}) };
+
+    // Update badge indicator
+    if (settings.showBadgeIndicator) {
+      if (isIssue) {
+        chrome.action.setBadgeText({ text: ' ', tabId: activeInfo.tabId });
+        chrome.action.setBadgeBackgroundColor({ color: '#238636', tabId: activeInfo.tabId });
+      } else {
+        chrome.action.setBadgeText({ text: '', tabId: activeInfo.tabId });
+      }
+    }
+
+    if (!isIssue) {
+      // Clear auto-open context when switching to non-issue pages
+      await chrome.storage.local.remove('autoOpenContext');
+    }
+  } catch (e) {
+    // Tab might not exist
+  }
 });
