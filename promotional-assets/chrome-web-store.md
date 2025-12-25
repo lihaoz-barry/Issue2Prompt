@@ -13,7 +13,7 @@
 
 ### Extension Name
 ```
-GitHub Issue to AI Prompt
+Issue2Prompt
 ```
 
 ### Short Description (132 characters max)
@@ -23,7 +23,7 @@ Convert GitHub issues into optimized AI prompts instantly. Use templates or AI-p
 
 ### Detailed Description
 ```
-GitHub Issue to AI Prompt - Transform GitHub Issues into Perfect AI Prompts
+Issue2Prompt - Transform GitHub Issues into Perfect AI Prompts
 
 Tired of manually copying and formatting GitHub issues to get help from AI assistants? This extension automatically extracts all relevant information from any GitHub issue and converts it into a well-structured prompt ready for Claude, ChatGPT, or any AI coding assistant.
 
@@ -81,7 +81,7 @@ English
 ## Required Assets
 
 ### Icon Sizes Needed
-- 128x128 px (store icon) - Use: `github-issue-to-prompt/icons/icon128.png`
+- 128x128 px (store icon) - Use: `issue2prompt/icons/icon128.png`
 
 ### Screenshots (1280x800 or 640x400 recommended)
 Upload these from `promotional-assets/`:

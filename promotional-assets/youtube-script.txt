@@ -1,6 +1,6 @@
 YOUTUBE VIDEO SCRIPT
 ====================
-Title: GitHub Issue to AI Prompt - Chrome Extension Demo (Save Hours on Bug Fixes!)
+Title: Issue2Prompt - Chrome Extension Demo (Save Hours on Bug Fixes!)
 Duration: ~3-4 minutes
 Format: Screen recording with voiceover
 
@@ -34,7 +34,7 @@ I built a Chrome extension to fix this."
 VISUAL: Show the extension icon, then the popup opening
 
 VOICEOVER:
-"GitHub Issue to AI Prompt. One click, and it extracts everything you need from any GitHub issue - title, description, code blocks, error logs, comments, linked PRs - and formats it into a clean prompt ready for any AI assistant."
+"Issue2Prompt. One click, and it extracts everything you need from any GitHub issue - title, description, code blocks, error logs, comments, linked PRs - and formats it into a clean prompt ready for any AI assistant."
 
 [0:45 - 1:30] DEMO: BASIC USAGE
 ---------------------------------
@@ -96,7 +96,7 @@ Your API key is stored locally and never leaves your browser except to call Open
 VISUAL: Show GitHub repo, Chrome Web Store link
 
 VOICEOVER:
-"That's GitHub Issue to AI Prompt. Free, open source, no tracking.
+"That's Issue2Prompt. Free, open source, no tracking.
 
 Links are in the description below. If this saves you time, consider giving it a star on GitHub.
 
@@ -106,7 +106,7 @@ Thanks for watching!"
 VIDEO DESCRIPTION:
 ================================================================================
 
-GitHub Issue to AI Prompt - Chrome extension that converts GitHub issues into optimized prompts for ChatGPT, Claude, and other AI assistants.
+Issue2Prompt - Chrome extension that converts GitHub issues into optimized prompts for ChatGPT, Claude, and other AI assistants.
 
 🔗 LINKS:
 • Chrome Web Store: [link]

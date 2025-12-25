@@ -14,7 +14,7 @@
 
 ### Title
 ```
-GitHub Issue to AI Prompt - Chrome extension that extracts GitHub issue context for AI assistants
+Issue2Prompt - Chrome extension that extracts GitHub issue context for AI assistants
 ```
 
 ### URL

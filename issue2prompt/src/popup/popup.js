@@ -1,5 +1,5 @@
 /**
- * Popup Script - GitHub Issue to AI Prompt
+ * Popup Script - Issue2Prompt
  * Handles the popup UI logic
  */
 

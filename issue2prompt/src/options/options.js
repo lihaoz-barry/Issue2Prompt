@@ -1,5 +1,5 @@
 /**
- * Options Page Script - GitHub Issue to AI Prompt
+ * Options Page Script - Issue2Prompt
  */
 
 (function() {

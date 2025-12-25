@@ -1,5 +1,5 @@
 /**
- * Content Script - GitHub Issue to AI Prompt
+ * Content Script - Issue2Prompt
  * Injects the "Generate AI Prompt" button into GitHub issue pages
  */
 
@@ -11,8 +11,8 @@
   window.githubIssueToPromptInjected = true;
 
   // Configuration
-  const BUTTON_ID = 'github-issue-to-prompt-btn';
-  const TOAST_ID = 'github-issue-to-prompt-toast';
+  const BUTTON_ID = 'issue2prompt-btn';
+  const TOAST_ID = 'issue2prompt-toast';
 
   /**
    * Initialize the extension
@@ -58,7 +58,7 @@
     // Find the best location to inject the button
     const targetContainer = findButtonContainer();
     if (!targetContainer) {
-      console.log('[GitHub Issue to Prompt] Could not find suitable container for button');
+      console.log('[Issue2Prompt] Could not find suitable container for button');
       return;
     }
 
@@ -90,7 +90,7 @@
     container = document.querySelector('.js-issue-title-container');
     if (container) {
       const wrapper = document.createElement('div');
-      wrapper.className = 'github-issue-to-prompt-container';
+      wrapper.className = 'issue2prompt-container';
       wrapper.style.cssText = 'display: inline-flex; margin-left: 8px; vertical-align: middle;';
       container.appendChild(wrapper);
       return wrapper;
@@ -100,7 +100,7 @@
     const h1 = Array.from(document.querySelectorAll('h1')).find(el => el.className.includes('PageHeader-Title'));
     if (h1 && h1.parentElement) {
       const wrapper = document.createElement('div');
-      wrapper.className = 'github-issue-to-prompt-container';
+      wrapper.className = 'issue2prompt-container';
       wrapper.style.cssText = 'display: inline-flex; margin-left: 8px; vertical-align: middle;';
       h1.parentElement.appendChild(wrapper);
       return wrapper;
@@ -111,7 +111,7 @@
       Array.from(document.querySelectorAll('div, span, h2, h3')).find(el => el.textContent.trim() === 'Assignees')?.closest('div');
     if (container) {
       const wrapper = document.createElement('div');
-      wrapper.className = 'github-issue-to-prompt-container mt-3';
+      wrapper.className = 'issue2prompt-container mt-3';
       container.parentElement.insertBefore(wrapper, container);
       return wrapper;
     }
@@ -127,7 +127,7 @@
     const button = document.createElement('button');
     button.id = BUTTON_ID;
     button.type = 'button';
-    button.className = 'btn btn-sm github-issue-to-prompt-btn';
+    button.className = 'btn btn-sm issue2prompt-btn';
     button.innerHTML = `
       <svg class="octicon octicon-code mr-1" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
         <path d="M4.72 3.22a.75.75 0 0 1 1.06 1.06L2.06 8l3.72 3.72a.75.75 0 1 1-1.06 1.06L.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25zm6.56 0a.75.75 0 1 0-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 1 0 1.06 1.06l4.25-4.25a.75.75 0 0 0 0-1.06l-4.25-4.25z"></path>
@@ -170,7 +170,7 @@
         data: issueData
       }, response => {
         if (chrome.runtime.lastError) {
-          console.error('[GitHub Issue to Prompt] Error:', chrome.runtime.lastError);
+          console.error('[Issue2Prompt] Error:', chrome.runtime.lastError);
           showToast('Error extracting data. Please try again.', 'error');
           return;
         }
@@ -183,7 +183,7 @@
       });
 
     } catch (error) {
-      console.error('[GitHub Issue to Prompt] Error:', error);
+      console.error('[Issue2Prompt] Error:', error);
       showToast('Error: ' + error.message, 'error');
     } finally {
       // Restore button
@@ -453,7 +453,7 @@
     // Create toast
     const toast = document.createElement('div');
     toast.id = TOAST_ID;
-    toast.className = `github-issue-to-prompt-toast github-issue-to-prompt-toast-${type}`;
+    toast.className = `issue2prompt-toast issue2prompt-toast-${type}`;
     toast.innerHTML = `
       <span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span>
       <span class="toast-message">${message}</span>
@@ -537,7 +537,7 @@
           sendResponse({ success: true });
         });
       } catch (error) {
-        console.error('[GitHub Issue to Prompt] Error during re-extract:', error);
+        console.error('[Issue2Prompt] Error during re-extract:', error);
         sendResponse({ success: false, error: error.message });
       }
       return true; // Keep message channel open for async response
@@ -559,11 +559,11 @@
           data: issueData
         }, response => {
           if (response && response.success) {
-            console.log('[GitHub Issue to Prompt] Auto-extracted issue data');
+            console.log('[Issue2Prompt] Auto-extracted issue data');
           }
         });
       } catch (error) {
-        console.error('[GitHub Issue to Prompt] Auto-extract failed:', error);
+        console.error('[Issue2Prompt] Auto-extract failed:', error);
       }
     }, 1000);
   }

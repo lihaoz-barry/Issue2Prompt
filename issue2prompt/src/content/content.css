@@ -1,10 +1,10 @@
 /**
- * Content Script Styles - GitHub Issue to AI Prompt
+ * Content Script Styles - Issue2Prompt
  * Styles for the injected button and toast notifications
  */
 
 /* Main Generate Button */
-.github-issue-to-prompt-btn {
+.issue2prompt-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -23,38 +23,38 @@
   vertical-align: middle;
 }
 
-.github-issue-to-prompt-btn:hover {
+.issue2prompt-btn:hover {
   background-color: #2ea043;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
-.github-issue-to-prompt-btn:focus {
+.issue2prompt-btn:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.4);
 }
 
-.github-issue-to-prompt-btn:active {
+.issue2prompt-btn:active {
   background-color: #238636;
   transform: translateY(1px);
 }
 
-.github-issue-to-prompt-btn:disabled {
+.issue2prompt-btn:disabled {
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-.github-issue-to-prompt-btn svg {
+.issue2prompt-btn svg {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
 }
 
 /* Spinning animation for loading state */
-.github-issue-to-prompt-btn .spin {
-  animation: github-issue-to-prompt-spin 1s linear infinite;
+.issue2prompt-btn .spin {
+  animation: issue2prompt-spin 1s linear infinite;
 }
 
-@keyframes github-issue-to-prompt-spin {
+@keyframes issue2prompt-spin {
   from {
     transform: rotate(0deg);
   }
@@ -64,14 +64,14 @@
 }
 
 /* Container wrapper */
-.github-issue-to-prompt-container {
+.issue2prompt-container {
   display: inline-flex;
   align-items: center;
   margin-left: 8px;
 }
 
 /* Toast Notification */
-.github-issue-to-prompt-toast {
+.issue2prompt-toast {
   position: fixed;
   top: 16px;
   right: 16px;
@@ -93,46 +93,46 @@
   line-height: 1.4;
 }
 
-.github-issue-to-prompt-toast.toast-visible {
+.issue2prompt-toast.toast-visible {
   opacity: 1;
   transform: translateX(0);
 }
 
-.github-issue-to-prompt-toast.toast-hiding {
+.issue2prompt-toast.toast-hiding {
   opacity: 0;
   transform: translateX(100%);
 }
 
 /* Success toast */
-.github-issue-to-prompt-toast-success {
+.issue2prompt-toast-success {
   border-left: 4px solid #238636;
 }
 
-.github-issue-to-prompt-toast-success .toast-icon {
+.issue2prompt-toast-success .toast-icon {
   color: #238636;
   font-size: 18px;
   font-weight: bold;
 }
 
 /* Error toast */
-.github-issue-to-prompt-toast-error {
+.issue2prompt-toast-error {
   border-left: 4px solid #cf222e;
 }
 
-.github-issue-to-prompt-toast-error .toast-icon {
+.issue2prompt-toast-error .toast-icon {
   color: #cf222e;
   font-size: 18px;
   font-weight: bold;
 }
 
 /* Toast message */
-.github-issue-to-prompt-toast .toast-message {
+.issue2prompt-toast .toast-message {
   flex: 1;
   color: #24292f;
 }
 
 /* Toast close button */
-.github-issue-to-prompt-toast .toast-close {
+.issue2prompt-toast .toast-close {
   background: none;
   border: none;
   padding: 0;
@@ -145,56 +145,56 @@
   transition: opacity 0.2s ease;
 }
 
-.github-issue-to-prompt-toast .toast-close:hover {
+.issue2prompt-toast .toast-close:hover {
   opacity: 1;
 }
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
-  .github-issue-to-prompt-toast {
+  .issue2prompt-toast {
     background-color: #161b22;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 1px rgba(0, 0, 0, 0.3);
   }
 
-  .github-issue-to-prompt-toast .toast-message {
+  .issue2prompt-toast .toast-message {
     color: #c9d1d9;
   }
 
-  .github-issue-to-prompt-toast .toast-close {
+  .issue2prompt-toast .toast-close {
     color: #8b949e;
   }
 }
 
 /* GitHub dark theme support */
-[data-color-mode="dark"] .github-issue-to-prompt-toast,
-[data-dark-theme] .github-issue-to-prompt-toast {
+[data-color-mode="dark"] .issue2prompt-toast,
+[data-dark-theme] .issue2prompt-toast {
   background-color: #161b22;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 1px rgba(0, 0, 0, 0.3);
 }
 
-[data-color-mode="dark"] .github-issue-to-prompt-toast .toast-message,
-[data-dark-theme] .github-issue-to-prompt-toast .toast-message {
+[data-color-mode="dark"] .issue2prompt-toast .toast-message,
+[data-dark-theme] .issue2prompt-toast .toast-message {
   color: #c9d1d9;
 }
 
-[data-color-mode="dark"] .github-issue-to-prompt-toast .toast-close,
-[data-dark-theme] .github-issue-to-prompt-toast .toast-close {
+[data-color-mode="dark"] .issue2prompt-toast .toast-close,
+[data-dark-theme] .issue2prompt-toast .toast-close {
   color: #8b949e;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .github-issue-to-prompt-toast {
+  .issue2prompt-toast {
     left: 16px;
     right: 16px;
     max-width: none;
   }
 
-  .github-issue-to-prompt-btn span {
+  .issue2prompt-btn span {
     display: none;
   }
 
-  .github-issue-to-prompt-btn {
+  .issue2prompt-btn {
     padding: 5px 8px;
   }
 }

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "GitHub Issue to AI Prompt",
+  "name": "Issue2Prompt",
   "version": "1.0.0",
   "description": "Convert GitHub issues into structured AI prompts with one click",
   "permissions": [
