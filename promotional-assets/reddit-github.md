@@ -13,7 +13,7 @@
 
 ### Title
 ```
-Built a Chrome extension that extracts GitHub issue data into formatted prompts for AI assistants
+Issue2Prompt - Chrome extension that extracts GitHub issue data into AI-ready prompts
 ```
 
 ### Body

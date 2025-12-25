@@ -13,7 +13,7 @@
 
 ### Title
 ```
-[Showoff Saturday] Built a Chrome extension that turns GitHub issues into AI prompts - no more copy-paste hell
+[Showoff Saturday] Issue2Prompt - Chrome extension that turns GitHub issues into AI prompts
 ```
 
 ### Body

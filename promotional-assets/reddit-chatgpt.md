@@ -14,7 +14,7 @@
 
 ### Title
 ```
-Made a Chrome extension that formats GitHub issues into proper ChatGPT prompts automatically
+Issue2Prompt - Chrome extension that formats GitHub issues into proper ChatGPT prompts automatically
 ```
 
 ### Body
