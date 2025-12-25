@@ -7,8 +7,8 @@
   'use strict';
 
   // Prevent multiple injections
-  if (window.githubIssueToPromptInjected) return;
-  window.githubIssueToPromptInjected = true;
+  if (window.issue2promptInjected) return;
+  window.issue2promptInjected = true;
 
   // Configuration
   const BUTTON_ID = 'issue2prompt-btn';

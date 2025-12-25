@@ -13,7 +13,7 @@
 
 ### Title
 ```
-Chrome extension to format GitHub issues for Claude - one click to get all the context
+Issue2Prompt - Chrome extension to format GitHub issues for Claude in one click
 ```
 
 ### Body
