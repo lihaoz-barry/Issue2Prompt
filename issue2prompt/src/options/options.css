@@ -35,7 +35,29 @@ body {
 .header-content {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 16px;
+  flex-wrap: wrap;
+}
+
+.header-branding {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.header-actions a {
+  text-decoration: none;
+}
+
+.like-btn:hover {
+  color: #cf222e;
+  border-color: rgba(207, 34, 46, 0.4);
 }
 
 .logo-icon {
@@ -85,7 +107,7 @@ body {
   margin-bottom: 0;
 }
 
-.setting-group > label {
+.setting-group>label {
   display: block;
   font-weight: 500;
   margin-bottom: 6px;
@@ -684,5 +706,10 @@ body {
 
   .setting-sub-option {
     border-left-color: #30363d;
+  }
+
+  .like-btn:hover {
+    color: #f85149;
+    border-color: rgba(248, 81, 81, 0.4);
   }
 }
